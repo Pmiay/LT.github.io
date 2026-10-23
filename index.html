@@ -1,117 +1,344 @@
-<!doctype html>
-<html lang="en" class="h-100">
-  <head>
-    <!-- Google tag (gtag.js) -->
-          <script async src="https://www.googletagmanager.com/gtag/js?id=G-E8TR09H75G"></script>
-          <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-E8TR09H75G');
-          </script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="R&M">
-    <meta name="generator" content="1.0">
-    <title>Miyuro Dele</title>
-
-   
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/cover/">
-
-    
-
-    <!-- miyuro.one core CSS -->
-<link href="https://miyuro.one/styles/miyuro.dele.css" rel="stylesheet">
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Administración Miyuro</title>
+    <!-- Tailwind CSS para un diseño moderno -->
+    <script src="https://miyuro.one/scripts/miyuro.one.browser@4.js"></script>
     <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
+        .loading { display: none; }
+        .loading.active { display: flex; }
+        .hidden { display: none !important; }
     </style>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
 
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav class="bg-slate-900 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold flex items-center gap-2">
+                📦 Miyuro DB Admin
+            </h1>
+            <div class="flex items-center gap-2">
+                <input type="password" id="githubToken" placeholder="Pegar GitHub PAT Token" 
+                       class="bg-slate-800 text-sm text-white px-3 py-1.5 rounded border border-slate-700 focus:outline-none focus:border-blue-500 w-64">
+                <button onclick="cargarBaseDatos()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded text-sm font-semibold transition">
+                    🔄 Cargar DB
+                </button>
+            </div>
+        </div>
+    </nav>
+        <!-- Parte II -->
 
-    <!-- Custom template Style -->
-    <link href="style.dele.css" rel="stylesheet">
-  </head>
-  <body class="d-flex h-100 text-center text-white bg-dark">
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="container mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- PANELES DE ESTADÍSTICAS -->
+        <div class="lg:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                <p class="text-gray-500 text-sm font-medium">Total Productos</p>
+                <p id="statTotal" class="text-2xl font-bold text-slate-800">0</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                <p class="text-gray-500 text-sm font-medium">Disponibles</p>
+                <p id="statDisponible" class="text-2xl font-bold text-green-600">0</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                <p class="text-gray-500 text-sm font-medium">Vendidos</p>
+                <p id="statVendido" class="text-2xl font-bold text-amber-600">0</p>
+            </div>
+        </div>
+
+        <!-- FORMULARIO (CREAR / EDITAR) -->
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 h-fit">
+            <h2 id="formTitle" class="text-lg font-bold text-slate-800 mb-4 border-b pb-2">Agregar Nuevo Producto</h2>
+            <form id="productoForm" onsubmit="guardarFormulario(event)" class="space-y-3">
+                <input type="hidden" id="prodId">
+                
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Código Producto (SKU)</label>
+                    <input type="text" id="prodProducto" required placeholder="Ej: st334" class="w-full border border-gray-300 rounded p-2 text-sm focus:ring-1 focus:ring-blue-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Nombre Completo</label>
+                    <input type="text" id="prodNombre" required placeholder="Nombre del artículo..." class="w-full border border-gray-300 rounded p-2 text-sm focus:ring-1 focus:ring-blue-500 outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Precio ($)</label>
+                        <input type="number" id="prodPrecio" step="0.01" required placeholder="0.00" class="w-full border border-gray-300 rounded p-2 text-sm focus:ring-1 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Estado</label>
+                        <select id="prodDisponible" class="w-full border border-gray-300 rounded p-2 text-sm focus:ring-1 focus:ring-blue-500 outline-none">
+                            <option value="Disponible">Disponible</option>
+                            <option value="Vendido">Vendido</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Grupo / Categoría</label>
+                    <input type="text" id="prodGrupo" required placeholder="Ej: Tecnología, Automobil" class="w-full border border-gray-300 rounded p-2 text-sm focus:ring-1 focus:ring-blue-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">URL de la Imagen</label>
+                    <input type="url" id="prodImagen" required placeholder="https://miyuro.one..." class="w-full border border-gray-300 rounded p-2 text-sm focus:ring-1 focus:ring-blue-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Enlace de Oferta</label>
+                    <input type="url" id="prodOfertaen" required placeholder="https://..." class="w-full border border-gray-300 rounded p-2 text-sm focus:ring-1 focus:ring-blue-500 outline-none">
+                </div>
+                
+                <div class="flex gap-2 pt-2">
+                    <button type="submit" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded text-sm transition">
+                        💾 Guardar Ítem
+                    </button>
+                    <button type="button" onclick="resetearFormulario()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-3 rounded text-sm transition">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- Parte III -->
+
     
-<div class="style.system-container p-3 mx-auto "><!-- clas = "d-flex  w-100 h-100 flex-column" -->
-  <header class="mb-auto">
-    <div>
-      <h3 class="float-md-start mb-0">Miyuro</h3>
-      <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a class="nav-link active" aria-current="page" href="#">Menu</a>
-        <!-- <a class="nav-link" href="#">Servicios</a> -->
-        <a class="nav-link" href="#">Contacto</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="px-3">
-    <h1>Servicio de Delivery</h1>
-    <p class="lead">Realizamos Cualquier compra por usted</p>
-    <!--<p class="lead">Estos son los productos que frecuentemente abastecemos a nuestros clientes</p>
-       <p class="lead">
-      <a href="#" class="btn btn-lg btn-secondary fw-bold border-white ">Leer Más</a>
-    </p> -->
-   
-  
- 
-  <div class="text-center mx-auto d-flex h-100 text-center text-white bg-dark" >
-    <!-- <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="250" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg> -->
-   <!-- <img src="https://miyuro.one/images/PosterWeb.jpg"  class="text-center px-0"> -->
-      <div class="col-12 px-0">
-                <!-- 
-                    <img height="90%" width="90%"  src="images/Perfil FB-LT01.jpg"  > 
-                     style="width:42px;height:42px;"
-                 -->
-        <a href="https://www.facebook.com/marketplace/profile/100094889416882/" target="_blank"><img src="images/Perfil FB-LT01.jpg" width=100% alt="MarketPlace Profile"></a>
-           <!--  
-              <img src="https://miyuro.one/images/store/f01.jpg"  > 
-              <img src="https://miyuro.one/images/store/f02.jpg"  > 
-              <img src="https://miyuro.one/images/store/f03.jpg"  > 
-              <img src="https://miyuro.one/images/store/f04.jpg"  > 
-              <img src="https://miyuro.one/images/store/f05.jpg"  >  
-              <embed src="https:/miyuro.one/images/store/Frecuentes.pdf" type="application/pdf" width="100%" height="100%">
-              <embed src="https://miyuro.one/images/store/Frecuentes.pdf" type="application/pdf" height="100%" height="200%">
-              <iframe src="https://docs.google.com/gview?url=https://miyuro.one/images/store/Frecuentes.pdf&embedded=true" style="width:100%; height:700px;" frameborder="0" ></iframe>
-            -->
+        <!-- TABLA DE INVENTARIO CON BUSCADOR -->
+        <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
+            <div class="p-4 border-b border-gray-200 bg-gray-50 flex flex-col sm:flex-row gap-3 justify-between items-center">
+                <div class="w-full sm:w-72 relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">🔍</span>
+                    <input type="text" id="buscadorTexto" oninput="renderizarTabla()" placeholder="Buscar por nombre, SKU o grupo..." 
+                           class="w-full pl-9 pr-3 py-1.5 bg-white border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <button onclick="sincronizarConGitHub()" class="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs px-4 py-2 rounded shadow-sm transition whitespace-nowrap">
+                    🚀 Confirmar Cambios en GitHub
+                </button>
+            </div>
             
-      </div>
-  </div>
-  <div> 
-  <footer class="mt-auto text-white-50">
-    <p>Miyuro es &copy; por R&M, sienta total libertad de consultarnos sin compromiso!</p>
-    <p class="mb-0">Primera ves aquí? <a href="https://miyuro.one/Ayuda.html">Conozca la historia de Miyuro</a>.</p>
-  </footer>
-</div>
-   </main>
-</div>
+            <div class="overflow-x-auto flex-1 max-h-[600px]">
+                <table class="w-full text-left border-collapse text-sm">
+                    <thead class="bg-slate-100 text-gray-600 uppercase text-xs sticky top-0 border-b border-gray-200 z-10">
+                        <tr>
+                            <th class="p-3">Imagen</th>
+                            <th class="p-3">Producto</th>
+                            <th class="p-3">Detalles</th>
+                            <th class="p-3">Precio</th>
+                            <th class="p-3">Estado</th>
+                            <th class="p-3 text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaProductos" class="divide-y divide-gray-200">
+                        <tr>
+                            <td colspan="6" class="p-8 text-center text-gray-400">Introduce tu Token de GitHub y haz clic en "Cargar DB"</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
 
-
-    <div class="btn-whap" id="btnw">
-      
-      <a href="https://wa.me/50768666811?text=Mi%20Lista" id="wbtn" target="_blank"> 
-        <img src="https://miyuro.one/images/btn_w.png" width="64" height="64" alt="">
-    </a>
-
-      <a href="https://wa.me/50764173737?text=Mi%20Lista" id="wbtn1" target="_blank"> 
-        <img src="https://miyuro.one/images/btn_w.png" width="64" height="64" alt="">
-    </a>
+    <!-- INDICADOR DE CARGA GLOBAL -->
+    <div id="loading" class="loading fixed inset-0 bg-slate-900/50 backdrop-blur-xs justify-center items-center z-50">
+        <div class="bg-white p-5 rounded-xl shadow-lg flex items-center gap-3">
+            <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+            <span class="font-semibold text-sm text-gray-700">Procesando con GitHub...</span>
+        </div>
     </div>
- 
-  </body>
+
+        <!-- Parte IV -->
+
+    
+     <!-- LÓGICA DE CONTROL DEL DASHBOARD -->
+    <script>
+        const URL_API = "https://github.com";
+        let listadoProductos = [];
+        let archivoSHA = "";
+
+        function toggleLoader(show) {
+            document.getElementById('loading').classList.toggle('active', show);
+        }
+
+        async function cargarBaseDatos() { 
+            const token = document.getElementById('githubToken').value.trim();
+            if (!token) return alert("Por favor introduce tu GitHub Personal Access Token (PAT)."); 
+            toggleLoader(true);
+            try {alert(URL_API);
+                const respuesta = await fetch(URL_API, {
+                    headers: {
+                        "Accept": "application/vnd.github+json",
+                        "Authorization": `Bearer ${token}`,
+                        "X-GitHub-Api-Version": "2022-11-28"
+                    }
+                });
+
+                if (!respuesta.ok) throw new Error("No se pudo conectar a GitHub. Verifica el token.");
+
+                const datos = await respuesta.json();
+                archivoSHA = datos.sha;
+
+                const textoPlano = decodeURIComponent(escape(atob(datos.content.replace(/\n/g, ''))));
+                const jsonLimpio = textoPlano.replace(/^\s*miyuro\s*=\s*/, '').replace(/;\s*$/, '');
+                listadoProductos = JSON.parse(jsonLimpio);
+
+                renderizarTabla();
+                actualizarEstadisticas();
+            } catch (error) {
+                alert("Error al cargar datos catch: " + error.message);
+            } finally {
+                toggleLoader(false);
+            }
+        }
+
+        // Renderiza la tabla aplicando el filtro de búsqueda en tiempo real
+        function renderizarTabla() {
+            const tbody = document.getElementById('tablaProductos');
+            const terminoBusqueda = document.getElementById('buscadorTexto').value.toLowerCase().trim();
+            tbody.innerHTML = '';
+
+            if (listadoProductos.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-gray-400">No hay productos cargados</td></tr>`;
+                return;
+            }
+
+            // Filtrado lógico por múltiples campos
+            const productosFiltrados = listadoProductos.filter(prod => {
+                return prod.nombre.toLowerCase().includes(terminoBusqueda) || 
+                       prod.producto.toLowerCase().includes(terminoBusqueda) || 
+                       prod.grupo.toLowerCase().includes(terminoBusqueda);
+            });
+
+            if (productosFiltrados.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-gray-400">Ningún producto coincide con la búsqueda</td></tr>`;
+                return;
+            }
+
+            productosFiltrados.forEach(prod => {
+                const badgeColor = prod.disponible === 'Disponible' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800';
+                
+                tbody.innerHTML += `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="p-3">
+                            <img src="${prod.imagen}" alt="Product" class="h-12 w-12 object-cover rounded-md border border-gray-200" onerror="this.src='https://placehold.co'">
+                        </td>
+                        <td class="p-3 font-mono font-bold text-xs text-gray-600">${prod.producto}</td>
+                        <td class="p-3 max-w-xs">
+                            <div class="font-semibold text-gray-900 line-clamp-1">${prod.nombre}</div>
+                            <div class="text-xs text-gray-400">${prod.grupo}</div>
+                        </td>
+                        <td class="p-3 font-semibold text-slate-700">$${Number(prod.precio).toFixed(2)}</td>
+                        <td class="p-3">
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold ${badgeColor}">${prod.disponible}</span>
+                        </td>
+                        <td class="p-3 text-center space-x-1 whitespace-nowrap">
+                            <button onclick="cargarEditar(${prod.id})" class="text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 px-2 py-1 rounded text-xs transition">Editar</button>
+                            <button onclick="eliminarProducto(${prod.id})" class="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 px-2 py-1 rounded text-xs transition">Eliminar</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function actualizarEstadisticas() {
+            document.getElementById('statTotal').innerText = listadoProductos.length;
+            document.getElementById('statDisponible').innerText = listadoProductos.filter(p => p.disponible === 'Disponible').length;
+            document.getElementById('statVendido').innerText = listadoProductos.filter(p => p.disponible === 'Vendido').length;
+        }
+
+        function cargarEditar(id) {
+            const prod = listadoProductos.find(p => p.id === id);
+            if (!prod) return;
+
+            document.getElementById('formTitle').innerText = "Editar Producto ID: " + id;
+            document.getElementById('prodId').value = prod.id;
+            document.getElementById('prodProducto').value = prod.producto;
+            document.getElementById('prodNombre').value = prod.nombre;
+            document.getElementById('prodPrecio').value = prod.precio;
+            document.getElementById('prodDisponible').value = prod.disponible;
+            document.getElementById('prodGrupo').value = prod.grupo;
+            document.getElementById('prodImagen').value = prod.imagen;
+            document.getElementById('prodOfertaen').value = prod.ofertaen;
+        }
+
+        function resetearFormulario() {
+            document.getElementById('formTitle').innerText = "Agregar Nuevo Producto";
+            document.getElementById('productoForm').reset();
+            document.getElementById('prodId').value = '';
+        }
+
+        function guardarFormulario(event) {
+            event.preventDefault();
+            
+            const idVal = document.getElementById('prodId').value;
+            const nuevoItem = {
+                id: idVal ? Number(idVal) : Date.now(),
+                disponible: document.getElementById('prodDisponible').value,
+                grupo: document.getElementById('prodGrupo').value,
+                imagen: document.getElementById('prodImagen').value,
+                producto: document.getElementById('prodProducto').value,
+                nombre: document.getElementById('prodNombre').value,
+                precio: Number(document.getElementById('prodPrecio').value),
+                ofertaen: document.getElementById('prodOfertaen').value
+            };
+
+            if (idVal) {
+                listadoProductos = listadoProductos.map(p => p.id === nuevoItem.id ? nuevoItem : p);
+            } else {
+                listadoProductos.unshift(nuevoItem);
+            }
+
+            resetearFormulario();
+            renderizarTabla();
+            actualizarEstadisticas();
+        }
+
+        function eliminarProducto(id) {
+            if(!confirm("¿Estás seguro de que deseas eliminar este producto?")) return;
+            listadoProductos = listadoProductos.filter(p => p.id !== id);
+            renderizarTabla();
+            actualizarEstadisticas();
+        }
+
+        async function sincronizarConGitHub() {
+            const token = document.getElementById('githubToken').value.trim();
+            if (!token || !archivoSHA) return alert("Primero debes cargar la base de datos con un token válido.");
+
+            toggleLoader(true);
+            try {
+                const estructuraTexto = `miyuro = ${JSON.stringify(listadoProductos, null, 2)} ;\n`;
+                const base64Contenido = btoa(unescape(encodeURIComponent(estructuraTexto)));
+
+                const respuesta = await fetch(URL_API, {
+                    method: "PUT",
+                    headers: {
+                        "Accept": "application/vnd.github+json",
+                        "Authorization": `Bearer ${token}`,
+                        "X-GitHub-Api-Version": "2022-11-28",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        message: "Dashboard Admin: Actualización de catálogo de productos",
+                        content: base64Contenido,
+                        sha: archivoSHA,
+                        branch: "main"
+                    })
+                });
+
+                if(!respuesta.ok) {
+                    const err = await respuesta.json();
+                    throw new Error(err.message || "Error desconocido");
+                }
+
+                const resultado = await respuesta.json();
+                archivoSHA = resultado.content.sha;
+                alert("¡Base de datos sincronizada con éxito en GitHub!");
+            } catch (error) {
+                alert("Error de sincronización: " + error.message);
+            } finally {
+                toggleLoader(false);
+            }
+        }
+    </script>
+</body>
 </html>
+      
