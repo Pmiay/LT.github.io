@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Técnico: Sincronización Ford 1.5L Dragon (EcoSport 2021)</title>
+    <link rel="stylesheet" href="https://miyuro.one/styles/miyuro.dele.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        h1 {
+            color: #003366;
+            border-bottom: 3px solid #003366;
+            padding-bottom: 10px;
+            font-size: 24px;
+        }
+        h2 {
+            color: #0056b3;
+            margin-top: 30px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            font-size: 18px;
+        }
+        h3 {
+            color: #444;
+            font-size: 15px;
+        }
+        p, li {
+            font-size: 15px;
+            text-align: justify;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .warning strong {
+            color: #856404;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #dbdbdb;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #003366;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .diagram-box {
+            background: #e9ecef;
+            border: 1px dashed #6c757d;
+            padding: 20px;
+            text-align: center;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="container mt-3       navbar-dark bg-dark px-3 mb-4" aria-label="Navegación por pestañas">
+    <ul class="nav nav-tabs nav-fill">
+        <li class="nav-item">
+        <a class="nav-link" href="guia_calado_ford_dragon_1_5.html">Guía Técnica de Puesta a Punto e Inmovilización</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link active fw-bold" aria-current="page" href="guia_sincronizacion_ford_1_5V2.html">Manual de Puesta a Punto y Fabricación de Herramental</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link " href="guia_sincronizacion_ford_1_5.html">Guía Práctica y Planos de Fabricación: Kit de Bloqueo</a>
+        </li>
+    </ul>
+    </nav>    
+    <div class="container">
+        <h1>Manual de Puesta a Punto y Fabricación de Herramental</h1>
+        <p><strong>Vehículo:</strong> Ford EcoSport Ambiente 2021 | <strong>Chasis:</strong> MAJBXXMRKBLD37803 | <strong>Motor:</strong> Dragon 1.5L 3-Cilindros (Belt-in-Oil)</p>
+        
+        <div class="warning">
+            <strong>CRÍTICO:</strong> Este motor cuenta con una correa de distribución sumergida en aceite. El procedimiento requiere precisión absoluta; la falta de fijación correcta en los árboles o el cigüeñal causará daños catastróficos por colisión de válvulas.
+        </div>
+
+        <h2>1. Especificaciones para Corte Láser (Traba de Árboles - OEM 303-1639)</h2>
+        <p>Diseña esta pieza en tu software CAD (AutoCAD, Inkscape, CorelDRAW) utilizando las cotas exactas. Configura la compensación de sangría (<em>Kerf</em>) del haz láser para asegurar el ajuste deslizante.</p>
+        <div class="diagram-box">
+            <table>
+                <tr>
+                    <th>Parámetro Mecánico</th>
+                    <th>Medida Nominal</th>
+                    <th>Tolerancia de Ajuste</th>
+                </tr>
+                <tr>
+                    <td><strong>Ancho de Bocas en "U" (Muescas)</strong></td>
+                    <td>24.01 mm</td>
+                    <td>+0.01 mm / -0.00 mm</td>
+                </tr>
+                <tr>
+                    <td><strong>Distancia Entre Centros (Boca a Boca)</strong></td>
+                    <td>94.50 mm</td>
+                    <td>&plusmn;0.02 mm</td>
+                </tr>
+                <tr>
+                    <td><strong>Distancia de Guías a Tornillo Culata</strong></td>
+                    <td>180.00 mm</td>
+                    <td>&plusmn;0.05 mm</td>
+                </tr>
+                <tr>
+                    <td><strong>Diámetro de Orificios de Sujeción (M6)</strong></td>
+                    <td>6.50 mm</td>
+                    <td>Pasante liso</td>
+                </tr>
+                <tr>
+                    <td><strong>Espesor Recomendado (Placa de Acero)</strong></td>
+                    <td>12.00 mm (1/2")</td>
+                    <td>Evita torsiones por resortes de válvulas</td>
+                </tr>
+            </table>
+        </div>
+        <h3>Diagrama Vectorial Guía (Plano de Planta 2D)</h3>
+        <div class="diagram-box">
+                  210.00 mm Base Exterior
+ _____________________________________________
+
+|                                             |
+|      O (Ø 6.5mm)                  O (Ø 6.5) | 50.00 mm Alto
+|____      __________________________      ___|
+     |    |                          |    |
+     |    |                          |    |  30.00 mm Profundidad U
+     |____|                          |____|
+    24.01 mm                        24.01 mm
+    (Admisión)                      (Escape)
+
+     |<--------- 94.50 mm ---------->|
+        </div>
+
+        <h2>2. Especificaciones de Torneado (Perno del Cigüeñal - OEM 303-1643)</h2>
+        <p>Este perno se rosca en el bloque del motor tras retirar la marcha para alojarse en el orificio de calado del volante de inercia, bloqueando el movimiento en el Punto Muerto Superior (TDC).</p>
+        <ul>
+            <li><strong>Material obligatorio:</strong> Acero aleado bonificado (AISI 4140). El acero blando común puede doblarse bajo el torque de aflojamiento de la polea exterior.</li>
+            <li><strong>Cabeza del Perno:</strong> Hexágono de 19 mm (Longitud: 15 mm).</li>
+            <li><strong>Cuerpo Roscado:</strong> M14 x 1.5 (Longitud de rosca: 45 mm).</li>
+            <li><strong>Punta / Espiga de Calado:</strong> Cilindro liso de Ø 8.00 mm (Longitud: 20 mm). Maquinar un chaflán guía de 1.0 mm a 45° en el extremo.</li>
+        </ul>
+
+        <h2>3. Diagrama de Desarmado y Secuencia de la Tapa de Punterías (Válvulas)</h2>
+        <p>Para colocar la placa láser en los árboles de levas, debes retirar la tapa de punterías. Sigue el orden inverso para el desarme, aflojando en etapas suaves (1/4 de vuelta por pasada) para evitar fisuras en el plástico.</p>
+        
+        <h3>Secuencia de Ajuste / Apriete (Instalación de la Tapa)</h3>
+        <p>Al reinstalar, aplica el torque en 2 etapas progresivas siguiendo estrictamente la numeración del centro hacia los extremos:</p>
+
+        <div class="diagram-box">
+  [ LADO TRASERO DE LA CULATA / ADMISIÓN ]
+    8        4        1        5        9
++----------------------------------------+
+
+|                                        |
+|   (Bujía 1)    (Bujía 2)    (Bujía 3)  |
+|                                        |
++----------------------------------------+
+    7        3        2        6        10
+  [ LADO FRONTAL DEL MOTOR / ESCAPE ]
+        </div>
+
+        <ul>
+            <li><strong>Etapa 1 (Pre-asentamiento):</strong> 4 N·m en la secuencia indicada (1 a 10).</li>
+            <li><strong>Etapa 2 (Torque Final):</strong> 9 a 10 N·m (Asegúrate de que los sellos de los tubos de las bujías queden perfectamente planos).</li>
+        </ul>
+
+        <h2>4. Tabla Completa de Torques y Secuencias de Distribución (Motor Dragon)</h2>
+        <p>Cuando realices el armado y puesta a punto, aplica los siguientes valores regulados de fábrica:</p>
+        
+        <table>
+            <tr>
+                <th>Componente del Motor</th>
+                <th>Torque Inicial</th>
+                <th>Etapa Angular / Final</th>
+                <th>Notas Técnicas de Ingeniería</th>
+            </tr>
+            <tr>
+                <td><strong>Tornillos de Culata (Cabeza)</strong></td>
+                <td>20 N·m</td>
+                <td>40 N·m + 90° + 90° + 90°</td>
+                <td>Usa tornillos TTY estructurales NUEVOS. No reutilizar.</td>
+            </tr>
+            <tr>
+                <td><strong>Polea del Cigüeñal (Damper)</strong></td>
+                <td>100 N·m</td>
+                <td>+ 90° (Ángulo)</td>
+                <td>El perno AISI 4140 debe estar firmemente colocado en el volante.</td>
+            </tr>
+            <tr>
+                <td><strong>Engranajes de Árboles (Variadores VCT)</strong></td>
+                <td>50 N·m</td>
+                <td>+ 90°</td>
+                <td>Trabar los árboles con la plantilla láser de 12mm fabricada.</td>
+            </tr>
+            <tr>
+                <td><strong>Tensor de la Correa</strong></td>
+                <td>25 N·m</td>
+                <td>Fijo sin ángulo</td>
+                <td>Retirar el pasador guía de 9 mm posterior a su apriete.</td>
+            </tr>
+            <tr>
+                <td><strong>Cojinetes / Tapas de Árbol de Levas</strong></td>
+                <td>10 N·m</td>
+                <td>Fijo continuo</td>
+                <td>Ajustar de manera progresiva y uniforme simultáneamente.</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

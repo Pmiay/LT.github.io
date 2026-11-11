@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Técnico de Herramental de Sincronización - Ford 1.5L Dragon</title>
+    <link rel="stylesheet" href="https://miyuro.one/styles/miyuro.dele.css">
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            /*max-width: 900px; */
+            margin: 0 auto; 
+            padding: 20px; 
+            background-color: #f4f7f6; }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        header { background-color: #0b3c5d; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: center; }
+        h1 { margin: 0; font-size: 24px; }
+        /*h2 { color: #0b3c5d; border-bottom: 2px solid #328cc1; padding-bottom: 5px; margin-top: 30px; }*/
+        h2 {
+            color: #0056b3;
+            margin-top: 30px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            font-size: 18px;
+        }
+        p, li {
+            font-size: 15px;
+            text-align: justify;
+        }
+        .specs-box { background-color: white; border-left: 5px solid #328cc1; padding: 15px; margin: 15px 0; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .warning { background-color: #fff3cd; border-left: 5px solid #ffc107; padding: 15px; margin: 15px 0; border-radius: 4px; color: #856404; }
+        pre { 
+            background: #282c34; 
+            color: #abb2bf; 
+            padding: 15px; 
+            border-radius: 5px; 
+            overflow-x: auto; 
+            font-family: 'Courier New', 
+            Courier, monospace; 
+            font-size: 14px; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #0b3c5d; color: white; }
+        .footer { text-align: center; font-size: 12px; color: #777; margin-top: 40px; border-top: 1px solid #ddd; padding-top: 10px; }
+    </style>
+</head>
+<body>
+    <nav class="container mt-3       navbar-dark bg-dark px-3 mb-4" aria-label="Navegación por pestañas">
+    <ul class="nav nav-tabs nav-fill">
+        <li class="nav-item">
+        <a class="nav-link" href="guia_calado_ford_dragon_1_5.html">Guía Técnica de Puesta a Punto e Inmovilización</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="guia_sincronizacion_ford_1_5V2.html">Manual de Puesta a Punto y Fabricación de Herramental</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link active fw-bold" aria-current="page" href="guia_sincronizacion_ford_1_5.html">Guía Práctica y Planos de Fabricación: Kit de Bloqueo</a>
+        </li>
+    </ul>
+    </nav>
+    <div class="container">
+    <header>
+        <h1>Guía Práctica y Planos de Fabricación: Kit de Bloqueo</h1>
+        <p>Motor Ford EcoSport Ambiente 2021 | Chasis: MAJBXXMRKBLD37803 | Motor: Dragon 1.5L 3-Cilindros</p>
+    </header>
+
+    <h2>1. Introducción al Sistema de Sincronización</h2>
+    <p>El motor Ford Dragon 1.5L utiliza una correa de distribución sumergida en aceite (<em>Belt-in-Oil</em>). A diferencia de sistemas anteriores, este motor requiere un bloqueo de alta precisión directamente sobre las <strong>caras cuadradas mecanizadas en los extremos de los árboles de levas</strong> y sobre el volante de inercia del cigüeñal.</p>
+
+    <h2>2. Pieza 1: Plantilla de Bloqueo de Árboles de Levas (OEM 303-1639)</h2>
+    <p>Diseñada para montarse directamente sobre el plano de la culata (aprovechando los barrenos de la tapa de punterías) y abrazar rígidamente ambos árboles sin juego lateral.</p>
+    
+    <div class="specs-box">
+        <strong>Especificaciones de Geometría Plana (2D) para Corte Láser:</strong>
+        <ul>
+            <li><strong>Ancho Total:</strong> 210.00 mm</li>
+            <li><strong>Alto Total:</strong> 50.00 mm</li>
+            <li><strong>Espesor sugerido (Acero):</strong> 12.00 mm (1/2") para máxima rigidez estructural.</li>
+            <li><strong>Orificios de Fijación:</strong> 2 barrenos circulares de Ø 6.50 mm (para tornillos M6), con distancia entre centros de 180.00 mm.</li>
+            <li><strong>Bocas en "U":</strong> Ancho exacto de 24.01 mm (Tolerancia estricta: +0.01 mm / -0.00 mm) y profundidad vertical de 30.00 mm.</li>
+            <li><strong>Distancia entre centros de ranuras "U":</strong> 94.50 mm (Ubicadas simétricamente a -47.25 mm y +47.25 mm del eje central).</li>
+        </ul>
+    </div>
+
+    <h3>Diagrama Vectorial para Software CAD:</h3>
+    <pre>
+                  210.00 mm 
+ _____________________________________________
+|                                             |
+|      O                                O     |  50.00 mm
+|   (6.5mm)                          (6.5mm)  |
+|____      __________________________      ___|
+     |    |                          |    |
+     |    |                          |    |  30.00 mm (Alto de U)
+     |____|                          |____|
+    24.01 mm                        24.01 mm
+     (Admisión)                      (Escape)
+
+     |<--------- 94.50 mm ---------->|
+    </pre>
+
+    <h2>3. Pieza 2: Perno de Calado del Cigüeñal (OEM 303-1643)</h2>
+    <p>Este perno se introduce a través del bloque motor tras retirar el motor de arranque. Su objetivo es bloquear de manera segura el volante de inercia cuando el cilindro número 1 se encuentra exactamente en su Punto Muerto Superior (TDC).</p>
+
+    <div class="specs-box">
+        <strong>Especificaciones para Torneado / Mecanizado:</strong>
+        <pre>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sección del Perno</th>
+                        <th>Dimensión Diámetro (Ø)</th>
+                        <th>Longitud del Segmento</th>
+                        <th>Detalles / Acabado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Cabeza del Perno</strong></td>
+                        <td>Hexagonal de 19 mm</td>
+                        <td>15.00 mm</td>
+                        <td>Facilita el agarre y manipulación con llave común.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cuerpo Roscado M14</strong></td>
+                        <td>M14 con paso de 1.5 mm</td>
+                        <td>45.00 mm</td>
+                        <td>Roscado exterior para acoplarse con rigidez al bloque motor.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Espiga / Pin de Bloqueo</strong></td>
+                        <td>Ø 8.00 mm liso</td>
+                        <td>20.00 mm</td>
+                        <td>Punta mecanizada con chaflán de 1.0 mm a 45° para un calado suave en el volante.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </pre>
+        <ul>
+            <li><strong>Longitud Total Útil:</strong> 80.00 mm (excluyendo la cabeza hexagonal).</li>
+            <li><strong>Material Obligatorio:</strong> Acero bonificado de alta resistencia (<strong>AISI 4140</strong> o superior) para soportar el torque inverso al apretar el cigüeñal.</li>
+        </ul>
+    </div>
+
+    <h2>4. Pasos Críticos de Aplicación en el Motor</h2>
+    <div class="warning">
+        <strong>¡ATENCIÓN! Consideraciones Técnicas Durante el Procedimiento:</strong>
+        <ol>
+            <li><strong>Compensación por Sangría (Kerf) del Láser:</strong> Al programar la cortadora láser para la pieza 1, asegúrate de ajustar el offset del haz de corte. Si el haz mide 0.15 mm y no se compensa, la boca en "U" se cortará a ~24.16 mm, provocando juego y un desfase peligroso en el tiempo del motor.</li>
+            <li><strong>Orientación de los Árboles:</strong> Antes de deslizar la plantilla, verifica que los códigos QR y las marcas de fundición de los engranajes miren hacia arriba.</li>
+            <li><strong>Engranaje de Tijera:</strong> Si vas a retirar por completo los engranajes de los árboles, utiliza una pinza o traba-engranajes para mantener retenido el muelle tensor interno.</li>
+        </ol>
+    </div>
+
+    <div class="footer">
+        <p>Manual generado por Ingenio y Soporte Técnico Avanzado de Herramentales - Forja e Ingeniería Mecánica © 2026</p>
+    </div>
+    </div>
+</body>
+</html>
